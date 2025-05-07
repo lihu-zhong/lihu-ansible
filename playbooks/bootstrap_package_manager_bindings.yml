@@ -7,7 +7,7 @@
   - name: Bootstrap DNF python bindings
     become: true
     when: ansible_distribution == "Fedora"
-    ansible.builtin.command: dnf install python3-dnf -y
+    ansible.builtin.command: dnf install python3-dnf python3-libdnf5 -y
     register: result
     changed_when: "'Nothing to do.' not in result.stdout_lines"
 
