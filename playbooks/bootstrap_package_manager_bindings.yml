@@ -8,8 +8,6 @@
     become: true
     when: ansible_distribution == "Fedora"
     ansible.builtin.command: dnf install python3-dnf -y
-    args:
-      warn: false
     register: result
     changed_when: "'Nothing to do.' not in result.stdout_lines"
 
@@ -17,7 +15,5 @@
     become: true
     when: ansible_distribution == "Pop!_OS"
     ansible.builtin.command: apt install python3-apt -y
-    args:
-      warn: false
     register: result
     changed_when: "'0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.' not in result.stdout_lines"
