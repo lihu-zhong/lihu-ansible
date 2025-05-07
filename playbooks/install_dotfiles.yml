@@ -81,10 +81,11 @@
         repo: https://github.com/lbenezriravin/lihu-dotfiles.git
         dest: "{{ ansible_env.HOME }}/.dotfiles"
 
-    - name: Install Vundle
+    - name: Install Paq
       ansible.builtin.git:
-        repo: https://github.com/VundleVim/Vundle.vim.git
-        dest: "{{ ansible_env.HOME }}/.vim/bundle/Vundle.vim"
+        repo: https://github.com/savq/paq-vim.git
+        dest: >-
+          {{ ansible_env.HOME }}/.local/share/nvim/site/pack/paqs/start/paq-nvim
 
     - name: Install dotfiles
       # rcm doesn't have a `-y` flag
