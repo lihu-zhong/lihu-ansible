@@ -78,7 +78,7 @@
 
     - name: Download lihu-dotfiles
       ansible.builtin.git:
-        repo: https://github.com/lbenezriravin/lihu-dotfiles.git
+        repo: https://github.com/lihu-zhong/lihu-dotfiles.git
         dest: "{{ ansible_env.HOME }}/.dotfiles"
 
     - name: Install Paq
