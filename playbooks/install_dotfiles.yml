@@ -78,12 +78,12 @@
 
     - name: Download lihu-dotfiles
       ansible.builtin.git:
-        repo: https://github.com/lihu-zhong/lihu-dotfiles.git
+        repo: git@github.com:lihu-zhong/lihu-dotfiles.git
         dest: "{{ ansible_env.HOME }}/.dotfiles"
 
     - name: Install Paq
       ansible.builtin.git:
-        repo: https://github.com/savq/paq-vim.git
+        repo: git@github.com:savq/paq-nvim.git
         dest: >-
           {{ ansible_env.HOME }}/.local/share/nvim/site/pack/paqs/start/paq-nvim
 
