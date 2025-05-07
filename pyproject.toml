@@ -7,6 +7,7 @@ authors = ["Lihu Ben-Ezri-Ravin <lihu@yoloswag.lol>"]
 [tool.poetry.dependencies]
 python = "^3.9"
 ansible = "^3.3.0"
+pyopenssl = "^24.1.0"
 
 [tool.poetry.dev-dependencies]
 tox = "^3.23.0"
