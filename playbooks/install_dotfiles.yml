@@ -23,6 +23,7 @@
           - fira-code-fonts
           - kitty
           - light
+          - neovim
           - sway
           - swaylock
           - waybar
@@ -40,16 +41,40 @@
         return_content: yes
       register: rustup_installer
       when: not cargo_file.stat.exists
-    
+
     - name: Run rustup installer
       ansible.builtin.shell:
         cmd: sh -s -- -y
         stdin: "{{ rustup_installer.content }}"
       when: not cargo_file.stat.exists
 
+    - name: Install treesitter dependencies
+      become: true
+      when: ansible_distribution == "Fedora"
+      ansible.builtin.dnf:
+        name:
+          - gcc
+        state: latest
+
+    - name: Check that treesitter exists
+      stat:
+        path: "{{ ansible_env.HOME }}/.cargo/bin/tree-sitter"
+      register: treesitter_file
+
     - name: Install treesitter cli
       ansible.builtin.command: >-
         {{ansible_env.HOME }}/.cargo/bin/cargo install tree-sitter-cli
+      when: not treesitter_file.stat.exists
+
+    - name: Check that eza exists
+      stat:
+        path: "{{ ansible_env.HOME }}/.cargo/bin/eza"
+      register: eza_file
+
+    - name: Install eza
+      ansible.builtin.command: >-
+        {{ansible_env.HOME }}/.cargo/bin/cargo install eza
+      when: not eza_file.stat.exists
 
     - name: Download lihu-dotfiles
       ansible.builtin.git:
