@@ -28,7 +28,6 @@
       ansible.builtin.dnf:
         name:
           - bat
-          - exa
           - fira-code-fonts
           - kitty
           - light
