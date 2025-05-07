@@ -1,21 +1,27 @@
-[tool.poetry]
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[project]
 name = "lihu-ansible"
 version = "0.0.0"
 description = "Automation for bootstrapping Lihu's workstation"
-authors = ["Lihu Ben-Ezri-Ravin <lihu@yoloswag.lol>"]
+authors = [
+    {name = "Lihu Zhong",email = "lihu@tuta.io"}
+]
+requires-python = "^3.13"
+
+[tool.poetry]
+package-mode = false
 
 [tool.poetry.dependencies]
-python = "^3.9"
-ansible = "^3.3.0"
-pyopenssl = "^24.1.0"
+ansible = "^11.5.0"
+pyopenssl = "^25.0.0"
 
-[tool.poetry.dev-dependencies]
-tox = "^3.23.0"
-yamllint = "^1.26.1"
-safety = "^1.10.3"
-ansible-lint = "^5.0.7"
-tox-poetry-installer = {version = "^0.7.0", extras = ["poetry"]}
 
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+[tool.poetry.group.dev.dependencies]
+tox = "^3.5.0"
+yamllint = "^1.37.1"
+safety = "^3.5.0"
+ansible-lint = "^25.4.0"
+tox-poetry-installer = {version = "^0.10.3", extras = ["poetry"]}
