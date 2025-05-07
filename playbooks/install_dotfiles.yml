@@ -28,9 +28,28 @@
           - waybar
         state: latest
 
+    - name: Check that cargo exists
+      stat:
+        path: "{{ ansible_env.HOME }}/.cargo/bin/cargo"
+      register: cargo_file
+
+    # https://dev.to/ymotongpoo/run-remote-install-scripts-without-using-curl-command-in-ansible-5b6b
+    - name: Fetch rustup
+      ansible.builtin.uri:
+        url: https://sh.rustup.rs
+        return_content: yes
+      register: rustup_installer
+      when: not cargo_file.stat.exists
+    
+    - name: Run rustup installer
+      ansible.builtin.shell:
+        cmd: sh -s -- -y
+        stdin: "{{ rustup_installer.content }}"
+      when: not cargo_file.stat.exists
+
     - name: Install treesitter cli
-      command:
-        cargo install tree-sitter-cli
+      ansible.builtin.command: >-
+        {{ansible_env.HOME }}/.cargo/bin/cargo install tree-sitter-cli
 
     - name: Download lihu-dotfiles
       ansible.builtin.git:
