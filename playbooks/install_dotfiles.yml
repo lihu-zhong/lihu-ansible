@@ -31,7 +31,7 @@
         state: latest
 
     - name: Check that cargo exists
-      stat:
+      ansible.builtin.stat:
         path: "{{ ansible_env.HOME }}/.cargo/bin/cargo"
       register: cargo_file
 
@@ -58,7 +58,7 @@
         state: latest
 
     - name: Check that treesitter exists
-      stat:
+      ansible.builtin.stat:
         path: "{{ ansible_env.HOME }}/.cargo/bin/tree-sitter"
       register: treesitter_file
 
@@ -68,7 +68,7 @@
       when: not treesitter_file.stat.exists
 
     - name: Check that eza exists
-      stat:
+      ansible.builtin.stat:
         path: "{{ ansible_env.HOME }}/.cargo/bin/eza"
       register: eza_file
 
@@ -76,6 +76,33 @@
       ansible.builtin.command: >-
         {{ansible_env.HOME }}/.cargo/bin/cargo install eza
       when: not eza_file.stat.exists
+
+    - name: Check that lua-language-server exists
+      ansible.builtin.stat:
+        path: "{{ ansible_env.HOME }}/.local/bin/lua-language-server"
+      register: lua_ls_file
+
+    - name: Create lua-language-server source directory
+      ansible.builtin.file:
+        path: "{{ ansible_env.HOME }}/Software/lua-language-server"
+        state: directory
+        mode: "0755"
+      when: not lua_ls_file.stat.exists
+
+    - name: Download lua-language-server
+      ansible.builtin.unarchive:
+        src: >-
+          https://github.com/LuaLS/lua-language-server/releases/download/3.14.0/lua-language-server-3.14.0-linux-{{ 'arm64' if ansible_architecture == 'aarch64' else 'x86' }}.tar.gz
+        remote_src: true
+        dest: "{{ ansible_env.HOME }}/Software/lua-language-server/"
+      when: not lua_ls_file.stat.exists
+
+    - name: Add a lua-langague-server link in PATH
+      ansible.builtin.file:
+        src: "{{ ansible_env.HOME }}/Software/lua-language-server/bin/lua-language-server"
+        dest: "{{ ansible_env.HOME }}/.local/bin/lua-language-server"
+        state: link
+      when: not lua_ls_file.stat.exists
 
     - name: Download lihu-dotfiles
       ansible.builtin.git:
