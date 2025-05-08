@@ -104,6 +104,12 @@
         state: link
       when: not lua_ls_file.stat.exists
 
+    - name: Install rust-analyzer
+      ansible.builtin.command: >-
+        {{ansible_env.HOME }}/.cargo/bin/rustup component add rust-analyzer
+      register: result
+      changed_when: "'up to date' not in result.stderr"
+
     - name: Download lihu-dotfiles
       ansible.builtin.git:
         repo: git@github.com:lihu-zhong/lihu-dotfiles.git
