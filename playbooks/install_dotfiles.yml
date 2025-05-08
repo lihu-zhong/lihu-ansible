@@ -24,6 +24,7 @@
           - kitty
           - light
           - neovim
+          - nodejs-bash-language-server
           - sway
           - swaylock
           - waybar
