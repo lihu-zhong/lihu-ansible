@@ -25,3 +25,8 @@
         - wl-clipboard
         - xprop
         state: latest
+
+    - name: Install gnome extension manager
+      community.general.flatpak:
+        name: com.mattjakeman.ExtensionManager
+        state: latest
