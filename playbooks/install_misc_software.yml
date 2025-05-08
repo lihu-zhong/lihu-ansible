@@ -10,16 +10,18 @@
       become: true
       ansible.builtin.dnf:
         name:
+        - NetworkManager-tui
+        - ShellCheck
         - chromium
         - fd-find
-        - NetworkManager-tui
+        - gnome-shell-extension-pop-shell
+        - htop
         - pavucontrol
         - playerctl
         - python3-devel
         - ripgrep
-        - ShellCheck
         - systemd-devel
         - vim
         - wl-clipboard
-        - htop
+        - xprop
         state: latest
